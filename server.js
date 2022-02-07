@@ -4,11 +4,13 @@ const usersUtils = require("./users");
 const aboutCompany = require("./data/about.json");
 const contctInfo = require("./data/contact.json");
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const ERROR = "ERROR";
 const SUCCESS  = "SUCCESS"; 
 
 const app = express();
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 function verifyLogin(req, res, next){
@@ -104,6 +106,6 @@ app.post("/login", function(res, req){
   }
 })
 
-app.listen(8081, function(){
+app.listen(8080, function(){
     console.log('server running at port 8080');
 });
