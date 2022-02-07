@@ -1,0 +1,14 @@
+[
+    {
+        "Name": "SunFlower",
+        "Color": "Yellow",
+        "Price": "25",
+        "Picture": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7QKabxpoVYEhgNof4IVJke_Ty4oNobgvFuQ&usqp=CAU"
+    },
+    {
+        "Name": "Lily",
+        "Color": "White",
+        "Price": "50",
+        "Picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Lilium_candidum_1.jpg/800px-Lilium_candidum_1.jpg" 
+    }
+]
