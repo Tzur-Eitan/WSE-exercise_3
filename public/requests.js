@@ -1,5 +1,3 @@
-import $ from "./jquery-3.6.0";
-
 const ERROR = "ERROR";
 const SUCCESS  = "SUCCESS"; 
 
@@ -57,7 +55,7 @@ function getContact(successCallback){
     createGetRequest("/Contact", {}, successCallback, ()=>{})
 }
 
-function getContact(successCallback){
+function getAbout(successCallback){
     createGetRequest("/About", {}, successCallback, ()=>{})
 }
 
@@ -71,4 +69,3 @@ function createGetRequest(url, data, successCallback, failedCallback){
         }
     })
 }
-

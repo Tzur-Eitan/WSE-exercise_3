@@ -62,3 +62,18 @@ body {
   color: #fff;
   border-bottom-color: #fff;
 }
+
+.wrap-panel{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.card{
+  margin: 10px;
+  color: 'black';
+}
+
+.card-text{
+  display: block;
+}

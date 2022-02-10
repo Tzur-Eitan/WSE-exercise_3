@@ -41,7 +41,7 @@ app.get("/Users", verifyLogin, function (req, res) {
 });
 
 //add user
-app.get("/AddUser", verifyLogin, function (res, req) {
+app.get("/AddUser", verifyLogin, function (req, res) {
   const userToAdd = {
     Name: req.query.userName,
     Password: req.query.userPassword,
@@ -58,7 +58,7 @@ app.get("/AddUser", verifyLogin, function (res, req) {
   }
 });
 
-app.get("/RemoveUser", verifyLogin, function(res,req){
+app.get("/RemoveUser", verifyLogin, function(req, res){
     const userNameToRemove = res.query.userName;
     const reqUserName = res.query.reqUserName;
     const manageToRemove = usersUtils.removeUser(reqUserName, userNameToRemove);
@@ -70,7 +70,7 @@ app.get("/RemoveUser", verifyLogin, function(res,req){
     }
 })
 
-app.get("/ChangeUserType", verifyLogin, function(res,req){
+app.get("/ChangeUserType", verifyLogin, function(req, res){
     const reqUserName = res.query.reqUserName;
     const userName = res.query.userName;
     const newUserType = res.query.newUserType;
@@ -84,16 +84,16 @@ app.get("/ChangeUserType", verifyLogin, function(res,req){
 })
 
 //About company
-app.get("/About", function(res,req){
-  res.json({Type: SUCCESS, Content: aboutCompany});
+app.get("/About", function(req, res){
+  res.json({Type: SUCCESS, Content: aboutCompany.Data});
 })
 
 //Contact company
-app.get("/Contact", function(res,req){
+app.get("/Contact", function(req, res){
   res.json({Type: SUCCESS, Content: contctInfo});
 })
 
-app.post("/login", function(res, req){
+app.post("/login", function(req, res){
   const body  =req.body;
   const userName = body.userName;
   const password = body.password;
