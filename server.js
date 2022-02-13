@@ -31,7 +31,7 @@ app.get("/Flowers", verifyLogin, function (req, res) {
 
 //return all the users without password filed
 app.get("/Users", verifyLogin, function (req, res) {
-  const userName = req.query.userName;
+  const userName = req.query.reqUserName;
   const users = usersUtils.getUsers(userName);
   if (users == undefined) {
     res.json({ Type: ERROR, Content: "Authorization required" });
