@@ -21,6 +21,10 @@
 
     <!-- Custom styles for this template -->
     <link href="cover.css" rel="stylesheet" />
+    <script type="text/javascript">
+      window.userName = "Osher";
+      window.userType = "Manager";
+    </script>
     <script src="./jquery-3.6.0.js"></script>
     <script src="./requests.js"></script>
     <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -55,6 +59,7 @@
       </header>
 
       <main class="px-3"></main>
+      
       <!-- Modal -->
       <div
         class="modal fade text-dark"
@@ -76,15 +81,15 @@
             </div>
             <div class="modal-body">
               <form>
-                <div class="mb-3">
-                  <label for="userName" class="form-label">User namee</label>
+                <div class="mb-3" id="user-name-form-control">
+                  <label for="userName" class="form-label">User name</label>
                   <input type="text" class="form-control" id="userName" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" id="password-form-control">
                   <label for="password" class="form-label">Password</label>
                   <input type="password" class="form-control" id="password" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" id="email-form-control">
                   <label for="email" class="form-label">Email address</label>
                   <input
                     type="email"
@@ -93,10 +98,10 @@
                     placeholder="name@example.com"
                   />
                 </div>
-                <div>
-                  <label for="user-type" class="form-label"
-                    >Select user type</label
-                  >
+                <div class="mb-3" id="user-type-form-control">
+                  <label for="user-type" class="form-label">
+                    Select user type
+                  </label>
                   <select
                     id="user-type"
                     class="form-select"
@@ -135,7 +140,7 @@
         // getAbout(displayAbout);
         // getContact(displayContact);
         //getFlowers("Osher", displayFlowers, alert)
-        getUsers("Ruchama", displayUsers, alert);
+        getUsers(window.userName, displayUsers, alert);
       };
     </script>
   </body>

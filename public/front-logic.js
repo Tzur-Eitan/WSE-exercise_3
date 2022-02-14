@@ -26,7 +26,7 @@ function displayFlowers(flowers) {
   main.appendChild(flowersContainer);
 }
 
-function displayUsers(users, editUserButtonClicked, deleteUserButtonClicked, addUserButtonClicked) {
+function displayUsers(users, deleteUserButtonClicked) {
   cleanMainElement();
   const main = getMainElement();
   const addUser = document.createElement("button");
@@ -34,24 +34,60 @@ function displayUsers(users, editUserButtonClicked, deleteUserButtonClicked, add
   addUser.innerText = "Add User";
   addUser.setAttribute("data-bs-toggle", "modal");
   addUser.setAttribute("data-bs-target", "#edit-user");
-  addUser.click = addUserButtonClicked;
+  addUser.addEventListener("click", () => {
+    editUserModalForInsertion();
+  });
   main.appendChild(addUser);
-  if(users.length > 0){
+  if (users.length > 0) {
     const table = document.createElement("table");
     table.appendChild(getUserTableHeader(users[0]));
     users.forEach(user => {
-        table.appendChild(getUserInRow(user, editUserButtonClicked, deleteUserButtonClicked));
+      table.appendChild(getUserInRow(user, deleteUserButtonClicked));
     });
     main.appendChild(table);
   }
-  else{
-      const message = "No user to present";
-      main.appendChild(message);
+  else {
+    const message = "No user to present";
+    main.appendChild(message);
   }
 }
 
+function getFormControls() {
+  return document.getElementsByTagName("form")[0].childNodes;
+}
 
-function getUserInRow(user, editUserButtonClicked, deleteUserButtonClicked) {
+function editUserModalForInsertion() {
+  getFormControls().forEach(child => {
+    if (child.tagName === "DIV") {
+      child.style.display = "block";
+      child.childNodes.forEach(child2 => {
+        if (child2.tagName === "INPUT") {
+          child2.value = "";
+        }
+      })
+    }
+  })
+}
+
+function editUserModalForEdit(user) {
+  let controlsToShow = [
+    "user-name-form-control"
+  ];
+  document.getElementById("userName").value = user.Name;
+
+  getFormControls().forEach(child => {
+    if (child.tagName !== "DIV") return;
+    if (controlsToShow.includes(child.id)) {
+      child.style.display = "block";
+    }
+    else {
+      child.style.display = "none";
+    }
+  })
+}
+
+
+function getUserInRow(user, deleteUserButtonClicked) {
   const row = document.createElement("tr");
   const keys = Object.keys(user);
   keys.forEach((key) => {
@@ -59,13 +95,15 @@ function getUserInRow(user, editUserButtonClicked, deleteUserButtonClicked) {
     cell.innerText = user[key];
     row.appendChild(cell);
   });
-  row.appendChild(getUserActionsCell(user, editUserButtonClicked, deleteUserButtonClicked));
+  if (window.userType === "Manager") {
+    row.appendChild(getUserActionsCell(user, deleteUserButtonClicked));
+  }
   return row;
 }
 
-function getUserTableHeader(user){
-    const header = document.createElement("tr");
-    const keys = Object.keys(user);
+function getUserTableHeader(user) {
+  const header = document.createElement("tr");
+  const keys = Object.keys(user);
   keys.forEach((key) => {
     const cell = document.createElement("th");
     cell.innerText = key;
@@ -74,7 +112,7 @@ function getUserTableHeader(user){
   return header;
 }
 
-function getUserActionsCell(user, editUserButtonClicked, deleteUserButtonClicked){
+function getUserActionsCell(user, deleteUserButtonClicked) {
   const deleteButton = document.createElement("button");
   deleteButton.className = "btn btn-danger";
   deleteButton.innerText = "Delete";
@@ -82,8 +120,12 @@ function getUserActionsCell(user, editUserButtonClicked, deleteUserButtonClicked
   const editButten = document.createElement("button");
   editButten.className = "btn btn-light";
   editButten.innerText = "Edit";
-  editButten.click = () => editUserButtonClicked(user);
-  const cell  = document.createElement("td");
+  editButten.setAttribute("data-bs-toggle", "modal");
+  editButten.setAttribute("data-bs-target", "#edit-user");
+  editButten.addEventListener("click", () => {
+    editUserModalForEdit(user);
+  });
+  const cell = document.createElement("td");
   cell.appendChild(editButten);
   cell.appendChild(deleteButton);
   return cell;
