@@ -57,6 +57,7 @@ function getFormControls() {
 }
 
 function editUserModalForInsertion() {
+  document.getElementById("user-modal-title").innerText = "Create";
   getFormControls().forEach(child => {
     if (child.tagName === "DIV") {
       child.style.display = "block";
@@ -70,10 +71,11 @@ function editUserModalForInsertion() {
 }
 
 function editUserModalForEdit(user) {
+  document.getElementById("user-modal-title").innerText = `Edit ${user.Name}`;
   let controlsToShow = [
-    "user-name-form-control"
+    "user-type-form-control"
   ];
-  document.getElementById("userName").value = user.Name;
+  document.getElementById("user-type").value = user.Type;
 
   getFormControls().forEach(child => {
     if (child.tagName !== "DIV") return;

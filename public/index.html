@@ -144,19 +144,34 @@
         document
           .getElementById("save-changes-btn")
           .addEventListener("click", () => {
-            const userName = document.getElementById("userName").value;
-            const password = document.getElementById("password").value;
-            const email = document.getElementById("email").value;
-            const userType = document.getElementById("user-type").value;
-            addUser(
-              window.userName,
-              userName,
-              password,
-              email,
-              userType,
-              alert,
-              alert
-            );
+            const modalTitleWords = document
+              .getElementById("user-modal-title")
+              .innerText.split(" ");
+              const userType = document.getElementById("user-type").value;
+
+            if (modalTitleWords[0] == "Create") {
+              const userName = document.getElementById("userName").value;
+              const password = document.getElementById("password").value;
+              const email = document.getElementById("email").value;
+              addUser(
+                window.userName,
+                userName,
+                password,
+                email,
+                userType,
+                alert,
+                alert
+              );
+            } else {
+              const userNameToEdit = modalTitleWords[1];
+              changeUserType(
+                window.userName,
+                userNameToEdit,
+                userType,
+                alert,
+                alert
+              );
+            }
           });
         // getAbout(displayAbout);
         // getContact(displayContact);
