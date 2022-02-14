@@ -59,7 +59,7 @@
       </header>
 
       <main class="px-3"></main>
-      
+
       <!-- Modal -->
       <div
         class="modal fade text-dark"
@@ -123,7 +123,11 @@
               >
                 Close
               </button>
-              <button type="button" class="btn btn-primary">
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="save-changes-btn"
+              >
                 Save changes
               </button>
             </div>
@@ -137,16 +141,33 @@
     <script src="./front-logic.js"></script>
     <script type="text/javascript">
       window.onload = () => {
+        document
+          .getElementById("save-changes-btn")
+          .addEventListener("click", () => {
+            const userName = document.getElementById("userName").value;
+            const password = document.getElementById("password").value;
+            const email = document.getElementById("email").value;
+            const userType = document.getElementById("user-type").value;
+            addUser(
+              window.userName,
+              userName,
+              password,
+              email,
+              userType,
+              alert,
+              alert
+            );
+          });
         // getAbout(displayAbout);
         // getContact(displayContact);
         //getFlowers("Osher", displayFlowers, alert)
         getUsers(
-          window.userName, 
-          data => {
-            displayUsers(data, userToDelete => {
+          window.userName,
+          (data) => {
+            displayUsers(data, (userToDelete) => {
               removeUser(window.userName, userToDelete.Name, alert, alert);
-            })
-          }, 
+            });
+          },
           alert
         );
       };

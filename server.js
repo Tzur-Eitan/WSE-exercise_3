@@ -48,7 +48,7 @@ app.get("/AddUser", verifyLogin, function (req, res) {
     Email: req.query.userEmail,
     Type: req.query.userType,
   };
-  const reqUserName = res.query.reqUserName;
+  const reqUserName = req.query.reqUserName;
   const manageToAdd = usersUtils.addUser(reqUserName, userToAdd);
   if (manageToAdd) {
     res.json({ Type: SUCCESS, Content: "Manage to add user" });

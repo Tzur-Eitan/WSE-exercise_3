@@ -29,7 +29,7 @@ function addUser(logUserName, userName, password, email, type, successCallback, 
         userName,
         userPassword: password,
         userEmail: email,
-        usertype: type
+        userType: type
     };
     createGetRequest("/AddUser", {reqUserName: logUserName,...userToAdd}, successCallback, failedCallback);
 }
