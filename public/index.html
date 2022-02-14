@@ -140,6 +140,28 @@
     </div>
     <script src="./front-logic.js"></script>
     <script type="text/javascript">
+      function userOperationSuccess(data) {
+        showUsers();
+        alert(data);
+      }
+
+      function showUsers() {
+        getUsers(
+          window.userName,
+          (data) => {
+            displayUsers(data, (userToDelete) => {
+              removeUser(
+                window.userName,
+                userToDelete.Name,
+                userOperationSuccess,
+                alert
+              );
+            });
+          },
+          alert
+        );
+      }
+
       window.onload = () => {
         document
           .getElementById("save-changes-btn")
@@ -147,7 +169,7 @@
             const modalTitleWords = document
               .getElementById("user-modal-title")
               .innerText.split(" ");
-              const userType = document.getElementById("user-type").value;
+            const userType = document.getElementById("user-type").value;
 
             if (modalTitleWords[0] == "Create") {
               const userName = document.getElementById("userName").value;
@@ -159,7 +181,7 @@
                 password,
                 email,
                 userType,
-                alert,
+                userOperationSuccess,
                 alert
               );
             } else {
@@ -168,7 +190,7 @@
                 window.userName,
                 userNameToEdit,
                 userType,
-                alert,
+                userOperationSuccess,
                 alert
               );
             }
@@ -176,15 +198,7 @@
         // getAbout(displayAbout);
         // getContact(displayContact);
         //getFlowers("Osher", displayFlowers, alert)
-        getUsers(
-          window.userName,
-          (data) => {
-            displayUsers(data, (userToDelete) => {
-              removeUser(window.userName, userToDelete.Name, alert, alert);
-            });
-          },
-          alert
-        );
+        showUsers();
       };
     </script>
   </body>
