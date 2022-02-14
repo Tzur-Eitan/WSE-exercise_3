@@ -22,7 +22,7 @@
     <!-- Custom styles for this template -->
     <link href="cover.css" rel="stylesheet" />
     <script type="text/javascript">
-      window.userName = "Osher";
+      window.userName = "Ruchama";
       window.userType = "Manager";
     </script>
     <script src="./jquery-3.6.0.js"></script>
@@ -140,7 +140,15 @@
         // getAbout(displayAbout);
         // getContact(displayContact);
         //getFlowers("Osher", displayFlowers, alert)
-        getUsers(window.userName, displayUsers, alert);
+        getUsers(
+          window.userName, 
+          data => {
+            displayUsers(data, userToDelete => {
+              removeUser(window.userName, userToDelete.Name, alert, alert);
+            })
+          }, 
+          alert
+        );
       };
     </script>
   </body>

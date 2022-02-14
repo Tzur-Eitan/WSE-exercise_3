@@ -59,8 +59,8 @@ app.get("/AddUser", verifyLogin, function (req, res) {
 });
 
 app.get("/RemoveUser", verifyLogin, function(req, res){
-    const userNameToRemove = res.query.userName;
-    const reqUserName = res.query.reqUserName;
+    const userNameToRemove = req.query.userName;
+    const reqUserName = req.query.reqUserName;
     const manageToRemove = usersUtils.removeUser(reqUserName, userNameToRemove);
     if(manageToRemove){
         res.json({ Type: SUCCESS, Content: "Manage to remove user" });
@@ -71,9 +71,9 @@ app.get("/RemoveUser", verifyLogin, function(req, res){
 })
 
 app.get("/ChangeUserType", verifyLogin, function(req, res){
-    const reqUserName = res.query.reqUserName;
-    const userName = res.query.userName;
-    const newUserType = res.query.newUserType;
+    const reqUserName = req.query.reqUserName;
+    const userName = req.query.userName;
+    const newUserType = req.query.newUserType;
     const manageToChange = usersUtils.changeUserName(reqUserName, userName, newUserType);
     if(manageToChange){
         res.json({Type: SUCCESS, Content: "Manage to change user type" });

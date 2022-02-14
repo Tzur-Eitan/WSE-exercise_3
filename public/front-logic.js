@@ -116,7 +116,7 @@ function getUserActionsCell(user, deleteUserButtonClicked) {
   const deleteButton = document.createElement("button");
   deleteButton.className = "btn btn-danger";
   deleteButton.innerText = "Delete";
-  deleteButton.click = () => deleteUserButtonClicked(user);
+  deleteButton.addEventListener("click", () => deleteUserButtonClicked(user));
   const editButten = document.createElement("button");
   editButten.className = "btn btn-light";
   editButten.innerText = "Edit";

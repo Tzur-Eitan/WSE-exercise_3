@@ -1,5 +1,5 @@
 const USERS_FILE_NAME = "./data/users.json"
-const users = require(USERS_FILE_NAME);
+let users = require(USERS_FILE_NAME);
 const fs = require('fs');
 
 const MANAGER = "Manager";
@@ -58,7 +58,7 @@ function changeUserName(reqUserName, userName, newUserType){
  */
  function updateUsers(){
   const json = JSON.stringify(users);
-  fs.writeFile(USERS_FILE_NAME, json, 'utf8');
+  fs.writeFileSync(USERS_FILE_NAME, json);
 }
 
 function getUsers(reqUserName) {
