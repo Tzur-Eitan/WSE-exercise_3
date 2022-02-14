@@ -7,6 +7,10 @@ const EMPLOYEE = "Employee";
 const SUPPLIER = "Supplier";
 const CUSTOMER = "Customer";
 
+function _getActiveUsers() {
+  return users.filter(user => !user.IsDeleted);
+}
+
 //Add user by user request clasification
 function addUser(reqUserName, userToAdd) {
   const reqUsertype = getUserType(reqUserName);
@@ -17,23 +21,24 @@ function addUser(reqUserName, userToAdd) {
   if (reqUsertype == EMPLOYEE && newUsertype != CUSTOMER) {
     return false;
   }
+  userToAdd.IsDeleted = false;
   _addUser(userToAdd);
   return true;
 }
 
-function removeUser(reqUserName, userNameToRemove){
-    const reqUsertype = getUserType(reqUserName);
-    const oldUsertype = getUserType(userNameToRemove)
-    if(reqUsertype != MANAGER || oldUsertype == MANAGER){
-        return false;
-    } 
-    _removeUser(userNameToRemove);
-    return true;
+function removeUser(reqUserName, userNameToRemove) {
+  const reqUsertype = getUserType(reqUserName);
+  const oldUsertype = getUserType(userNameToRemove)
+  if (reqUsertype != MANAGER || oldUsertype == MANAGER) {
+    return false;
+  }
+  _removeUser(userNameToRemove);
+  return true;
 }
 
-function _removeUser(userName){
-    users = users.filter(user => user.Name != userName);
-    updateUsers();
+function _removeUser(userName) {
+  users.find(user => user.Name === userName).IsDeleted = true;
+  updateUsers();
 }
 
 //TODO:: add validation
@@ -43,39 +48,37 @@ function _addUser(user) {
 }
 
 
-function changeUserName(reqUserName, userName, newUserType){
-    const reqUserType = getUserType(reqUserName);
-    if(reqUserType != MANAGER){
-        return false;
-    }
-    findUser(userName).Type = newUserType;
-    updateUsers();
-    return true;
+function changeUserName(reqUserName, userName, newUserType) {
+  const reqUserType = getUserType(reqUserName);
+  if (reqUserType != MANAGER) {
+    return false;
+  }
+  findUser(userName).Type = newUserType;
+  updateUsers();
+  return true;
 }
 
 /**
  * update the users on the users file
  */
- function updateUsers(){
+function updateUsers() {
   const json = JSON.stringify(users);
   fs.writeFileSync(USERS_FILE_NAME, json);
 }
 
 function getUsers(reqUserName) {
   const type = getUserType(reqUserName);
-  switch (type) {
-    case MANAGER:
-      return users;
-    case EMPLOYEE:
-      const safeUsers = users.map((user) => {
-        const userClone = { ...user };
-        delete userClone.Password;
-        return userClone;
-      });
-      return safeUsers;
-    default:
-      return undefined;
+  if (![EMPLOYEE, MANAGER].includes(type)) {
+    return undefined;
   }
+
+  const safeUsers = _getActiveUsers().map((user) => {
+    const userClone = { ...user };
+    if (type === EMPLOYEE) delete userClone.Password;
+    delete userClone.IsDeleted;
+    return userClone;
+  });
+  return safeUsers;
 }
 
 //return user type by user name
@@ -83,19 +86,19 @@ function getUserType(userName) {
   return findUser(userName).Type;
 }
 
-function findUser(userName){
-    return users.find(user => userName == user.Name);
+function findUser(userName) {
+  return _getActiveUsers().find(user => userName == user.Name);
 }
 
-function login(userName, password){
-  const user =  findUser(userName);
-  if (user){
+function login(userName, password) {
+  const user = findUser(userName);
+  if (user) {
     return user.Password == password;
   }
   return false;
 }
 
-function userExist(userName){
+function userExist(userName) {
   const user = findUser(userName);
   return user != undefined;
 }
