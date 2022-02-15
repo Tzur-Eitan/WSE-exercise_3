@@ -21,10 +21,6 @@
 
     <!-- Custom styles for this template -->
     <link href="cover.css" rel="stylesheet" />
-    <script type="text/javascript">
-      window.userName = "Ruchama";
-      window.userType = "Manager";
-    </script>
     <script src="./jquery-3.6.0.js"></script>
     <script src="./requests.js"></script>
     <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -33,13 +29,21 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
       <header class="mb-auto">
         <div>
-          <img src="./logo.png" class="float-start mb-0" height="30px" />
+          <img src="./images/logo.png" class="float-start mb-0" height="30px" />
           <h3 class="float-start mb-0">Flowerz</h3>
-          <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link active" aria-current="page" href="#">About</a>
-            <a class="nav-link hide" href="#">Flowers</a>
-            <a class="nav-link hide" href="#">Users</a>
-            <a class="nav-link" href="#">Contact</a>
+          <nav id="nav-bar" class="nav nav-masthead justify-content-center">
+            <a
+              id="about-btn"
+              class="nav-link active"
+              aria-current="page"
+              href="#About"
+              >About</a
+            >
+            <a id="flowers-btn" class="nav-link hide" href="#Flowers"
+              >Flowers</a
+            >
+            <a id="users-btn" class="nav-link hide" href="#Users">Users</a>
+            <a id="contact-btn" class="nav-link" href="#Contact">Contact</a>
             <a
               href="#"
               class="btn fw-bold border-white bg-white float-md-end"
@@ -197,6 +201,26 @@
         alert(data);
       }
 
+      function updateContentByUrl(){
+        const root = location.hash.toLocaleLowerCase();
+        activeNavBtn(root);
+        switch (root) {
+          case "#contact":
+            getContact(displayContact);
+            break;
+          case "#flowers":
+            getFlowers(window.userName, displayFlowers, alert);
+            break;
+          case "#users":
+            showUsers();
+            break;
+          case "#about":
+          default:
+            getAbout(displayAbout);
+            break;
+            }
+      }
+
       function showUsers() {
         getUsers(
           window.userName,
@@ -214,12 +238,21 @@
         );
       }
 
+      window.addEventListener("hashchange", updateContentByUrl);
+
       window.onload = () => {
+        updateContentByUrl();
         document
           .getElementById("save-changes-btn")
           .addEventListener("click", () => {
-            const { userType, userName, password, email, userNameToEdit, userOperationType } =
-              getUserDataFromUserEditForm();
+            const {
+              userType,
+              userName,
+              password,
+              email,
+              userNameToEdit,
+              userOperationType,
+            } = getUserDataFromUserEditForm();
 
             if (userOperationType === "Create") {
               addUser(
@@ -268,10 +301,6 @@
           window.userType = "";
           userLogedOut();
         });
-        // getAbout(displayAbout);
-        // getContact(displayContact);
-        //getFlowers("Osher", displayFlowers, alert)
-        showUsers();
       };
     </script>
   </body>

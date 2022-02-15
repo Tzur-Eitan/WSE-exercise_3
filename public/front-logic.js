@@ -41,12 +41,11 @@ function displayUsers(users, deleteUserButtonClicked) {
   if (users.length > 0) {
     const table = document.createElement("table");
     table.appendChild(getUserTableHeader(users[0]));
-    users.forEach(user => {
+    users.forEach((user) => {
       table.appendChild(getUserInRow(user, deleteUserButtonClicked));
     });
     main.appendChild(table);
-  }
-  else {
+  } else {
     const message = "No user to present";
     main.appendChild(message);
   }
@@ -58,16 +57,18 @@ function getFormControls() {
 
 function editUserModalForInsertion() {
   document.getElementById("user-modal-title").innerText = "Create";
-  document.getElementById("edit-user").setAttribute("user-operation-type", "Create");
+  document
+    .getElementById("edit-user")
+    .setAttribute("user-operation-type", "Create");
   showUserTypeOptioms(window.userType === "Employee" ? ["Customer"] : []);
   clearAndShowAllUserForm();
 }
 
 function clearAndShowAllUserForm() {
-  getFormControls().forEach(child => {
+  getFormControls().forEach((child) => {
     if (child.tagName === "DIV") {
       child.style.display = "block";
-      child.childNodes.forEach(child2 => {
+      child.childNodes.forEach((child2) => {
         if (child2.tagName === "INPUT") {
           child2.value = "";
         }
@@ -78,24 +79,22 @@ function clearAndShowAllUserForm() {
 
 function editUserModalForEdit(user) {
   document.getElementById("user-modal-title").innerText = `Edit ${user.Name}`;
-  document.getElementById("edit-user").setAttribute("user-operation-type", "Edit");
+  document
+    .getElementById("edit-user")
+    .setAttribute("user-operation-type", "Edit");
   document.getElementById("edit-user").setAttribute("user-name", user.Name);
-  let controlsToShow = [
-    "user-type-form-control"
-  ];
+  let controlsToShow = ["user-type-form-control"];
   document.getElementById("user-type").value = user.Type;
 
-  getFormControls().forEach(child => {
+  getFormControls().forEach((child) => {
     if (child.tagName !== "DIV") return;
     if (controlsToShow.includes(child.id)) {
       child.style.display = "block";
-    }
-    else {
+    } else {
       child.style.display = "none";
     }
-  })
+  });
 }
-
 
 function getUserInRow(user, deleteUserButtonClicked) {
   const row = document.createElement("tr");
@@ -186,32 +185,31 @@ function cleanMainElement() {
 }
 
 /**
- * 
+ *
  * @param {*} optionsToShow If empty, show all
  */
 function showUserTypeOptioms(optionsToShow = []) {
-  const optionsElements = document.getElementById("user-type").getElementsByTagName("option");
+  const optionsElements = document
+    .getElementById("user-type")
+    .getElementsByTagName("option");
   for (let option of optionsElements) {
     if (optionsToShow.length === 0 || optionsToShow.includes(option.value)) {
       option.style.display = "block";
-    }
-    else {
+    } else {
       option.style.display = "none";
     }
   }
 }
 
-
 /**
  * Manage the page, decide which component to show and which not.
  */
 function userLogedIn() {
-  document
-    .getElementById("open-login-btn")
-    .classList.add("hide");
-  document
-    .getElementById("logout-btn")
-    .classList.remove("hide");
+  document.getElementById("open-login-btn").classList.add("hide");
+  document.getElementById("logout-btn").classList.remove("hide");
+  document.getElementById("flowers-btn").classList.remove("hide");
+  document.getElementById("users-btn").classList.remove("hide");
+  clearLogInFormData();
 }
 
 /**
@@ -220,6 +218,13 @@ function userLogedIn() {
 function userLogedOut() {
   document.getElementById("open-login-btn").classList.remove("hide");
   document.getElementById("logout-btn").classList.add("hide");
+  document.getElementById("flowers-btn").classList.add("hide");
+  document.getElementById("users-btn").classList.add("hide");
+}
+
+function clearLogInFormData(){
+  document.getElementById("userName-login").value = "";
+    document.getElementById("password-login").value = "";
 }
 
 function getUserDataFromLoginForm() {
@@ -227,7 +232,7 @@ function getUserDataFromLoginForm() {
   const password = document.getElementById("password-login").value;
   return {
     userName,
-    password
+    password,
   };
 }
 
@@ -245,6 +250,21 @@ function getUserDataFromUserEditForm() {
     password,
     email,
     userNameToEdit,
-    userOperationType
+    userOperationType,
   };
+  
+}
+
+function activeNavBtn(hash){
+  const nav = document.getElementById("nav-bar");
+  const navBtns = nav.getElementsByTagName("a");
+  hash = (hash == "#" || hash == "") ? "#about" : hash; 
+  for (let btn of navBtns){
+    if (btn.hash.toLowerCase() != hash){
+      btn.classList.remove("active");
+    }
+    else{
+      btn.classList.add("active");
+    }
+  }
 }
