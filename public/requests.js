@@ -7,10 +7,10 @@ function login(userName, password, successCallback, failedCallback){
         password
     };
     $.post("/login", data, function(data, status){
-        if (status == 200){
+        if (status == "success"){
             successCallback(userName);
         }
-        else if(status == 400){
+        else{
             failedCallback();
         }
     })

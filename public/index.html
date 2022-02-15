@@ -43,21 +43,73 @@
             <a
               href="#"
               class="btn fw-bold border-white bg-white float-md-end"
-              id="btn-login"
+              data-bs-toggle="modal"
+              data-bs-target="#login-modal"
+              id="open-login-btn"
             >
               Login
             </a>
             <a
               href="#"
               class="btn fw-bold border-warning bg-warning float-md-end hide"
-              id="btn-login"
+              id="logout-btn"
             >
               Logout
             </a>
           </nav>
         </div>
       </header>
-
+      <!-- login modal -->
+      <div
+        class="modal fade text-dark"
+        id="login-modal"
+        tabindex="-1"
+        aria-labelledby="login-modal-title"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="login-modal-title">Login</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3" id="user-name-form-control">
+                  <label for="userName" class="form-label">User name</label>
+                  <input type="text" class="form-control" id="userName-login" />
+                </div>
+                <div class="mb-3" id="password-form-control">
+                  <label for="password" class="form-label">Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password-login"
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                id="close-login-modal"
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary" id="login-btn">
+                Login
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <main class="px-3"></main>
 
       <!-- Edit/Create User -->
@@ -193,6 +245,29 @@
               );
             }
           });
+
+        document.getElementById("login-btn").addEventListener("click", () => {
+          const userName = document.getElementById("userName-login").value;
+          const password = document.getElementById("password-login").value;
+          login(
+            userName,
+            password,
+            (userName) => {
+              window.userName = userName;
+              document.getElementById("open-login-btn").classList.add("hide");
+              document.getElementById("logout-btn").classList.remove("hide");
+              document.getElementById("close-login-modal").click();
+            },
+            alert
+          );
+        });
+
+        document.getElementById("logout-btn").addEventListener("click", () => {
+          window.userName = "";
+          window.userType = "";
+          document.getElementById("open-login-btn").classList.remove("hide");
+          document.getElementById("logout-btn").classList.add("hide");
+        });
         // getAbout(displayAbout);
         // getContact(displayContact);
         //getFlowers("Osher", displayFlowers, alert)
