@@ -70,6 +70,17 @@ app.get("/RemoveUser", verifyLogin, function(req, res){
     }
 })
 
+app.get("/userType", verifyLogin, function(req, res){
+  const reqUserName = req.query.reqUserName;
+  const userType = usersUtils.getUserType(reqUserName);
+  if(userType !== undefined){
+    res.json({type:SUCCESS, Content: userType});
+  }
+  else {
+    res.json({type: ERROR, Content: "User name not found"})
+  }
+});
+
 app.get("/ChangeUserType", verifyLogin, function(req, res){
     const reqUserName = req.query.reqUserName;
     const userName = req.query.userName;

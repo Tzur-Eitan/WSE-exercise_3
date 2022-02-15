@@ -24,6 +24,10 @@ function getUsers(logUserName, successCallback, failedCallback){
     createGetRequest("/Users", {reqUserName: logUserName}, successCallback, failedCallback);
 }
 
+function getUserType(logUserName, successCallback, failedCallback){
+    createGetRequest("/userType", {reqUserName: logUserName}, successCallback, failedCallback);
+}
+
 function addUser(logUserName, userName, password, email, type, successCallback, failedCallback){
     const userToAdd = {
         userName,
