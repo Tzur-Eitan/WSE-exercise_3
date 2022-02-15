@@ -58,6 +58,12 @@ function getFormControls() {
 
 function editUserModalForInsertion() {
   document.getElementById("user-modal-title").innerText = "Create";
+  document.getElementById("edit-user").setAttribute("user-operation-type", "Create");
+  showUserTypeOptioms(window.userType === "Employee" ? ["Customer"] : []);
+  clearAndShowAllUserForm();
+}
+
+function clearAndShowAllUserForm() {
   getFormControls().forEach(child => {
     if (child.tagName === "DIV") {
       child.style.display = "block";
@@ -65,13 +71,15 @@ function editUserModalForInsertion() {
         if (child2.tagName === "INPUT") {
           child2.value = "";
         }
-      })
+      });
     }
-  })
+  });
 }
 
 function editUserModalForEdit(user) {
   document.getElementById("user-modal-title").innerText = `Edit ${user.Name}`;
+  document.getElementById("edit-user").setAttribute("user-operation-type", "Edit");
+  document.getElementById("edit-user").setAttribute("user-name", user.Name);
   let controlsToShow = [
     "user-type-form-control"
   ];
@@ -175,4 +183,20 @@ function cleanMainElement() {
   const main = getMainElement();
   main.innerText = "";
   main.innerHTML = "";
+}
+
+/**
+ * 
+ * @param {*} optionsToShow If empty, show all
+ */
+function showUserTypeOptioms(optionsToShow = []) {
+  const optionsElements = document.getElementById("user-type").getElementsByTagName("option");
+  for (let option of optionsElements) {
+    if (optionsToShow.length === 0 || optionsToShow.includes(option.value)) {
+      option.style.display = "block";
+    }
+    else {
+      option.style.display = "none";
+    }
+  }
 }

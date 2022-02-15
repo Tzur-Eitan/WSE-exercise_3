@@ -22,8 +22,8 @@
     <!-- Custom styles for this template -->
     <link href="cover.css" rel="stylesheet" />
     <script type="text/javascript">
-      window.userName = "Ruchama";
-      window.userType = "Manager";
+      window.userName = "Osher";
+      window.userType = "Employee";
     </script>
     <script src="./jquery-3.6.0.js"></script>
     <script src="./requests.js"></script>
@@ -60,7 +60,7 @@
 
       <main class="px-3"></main>
 
-      <!-- Modal -->
+      <!-- Edit/Create User -->
       <div
         class="modal fade text-dark"
         id="edit-user"
@@ -166,12 +166,10 @@
         document
           .getElementById("save-changes-btn")
           .addEventListener("click", () => {
-            const modalTitleWords = document
-              .getElementById("user-modal-title")
-              .innerText.split(" ");
+            const modalElement = document.getElementById("edit-user");
             const userType = document.getElementById("user-type").value;
 
-            if (modalTitleWords[0] == "Create") {
+            if (modalElement.getAttribute("user-operation-type") == "Create") {
               const userName = document.getElementById("userName").value;
               const password = document.getElementById("password").value;
               const email = document.getElementById("email").value;
@@ -185,7 +183,7 @@
                 alert
               );
             } else {
-              const userNameToEdit = modalTitleWords[1];
+              const userNameToEdit = modalElement.getAttribute("user-name");
               changeUserType(
                 window.userName,
                 userNameToEdit,
