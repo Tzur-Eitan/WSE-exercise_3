@@ -53,7 +53,7 @@ function displayUsers(users, deleteUserButtonClicked) {
 }
 
 function getFormControls() {
-  return document.getElementsByTagName("form")[0].childNodes;
+  return document.getElementById("user-edit-form").childNodes;
 }
 
 function editUserModalForInsertion() {
