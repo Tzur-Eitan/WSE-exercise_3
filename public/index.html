@@ -22,8 +22,8 @@
     <!-- Custom styles for this template -->
     <link href="cover.css" rel="stylesheet" />
     <script type="text/javascript">
-      window.userName = "Osher";
-      window.userType = "Employee";
+      window.userName = "Ruchama";
+      window.userType = "Manager";
     </script>
     <script src="./jquery-3.6.0.js"></script>
     <script src="./requests.js"></script>
@@ -218,13 +218,10 @@
         document
           .getElementById("save-changes-btn")
           .addEventListener("click", () => {
-            const modalElement = document.getElementById("edit-user");
-            const userType = document.getElementById("user-type").value;
+            const { userType, userName, password, email, userNameToEdit, userOperationType } =
+              getUserDataFromUserEditForm();
 
-            if (modalElement.getAttribute("user-operation-type") == "Create") {
-              const userName = document.getElementById("userName").value;
-              const password = document.getElementById("password").value;
-              const email = document.getElementById("email").value;
+            if (userOperationType === "Create") {
               addUser(
                 window.userName,
                 userName,
@@ -235,7 +232,6 @@
                 alert
               );
             } else {
-              const userNameToEdit = modalElement.getAttribute("user-name");
               changeUserType(
                 window.userName,
                 userNameToEdit,
@@ -247,8 +243,7 @@
           });
 
         document.getElementById("login-btn").addEventListener("click", () => {
-          const userName = document.getElementById("userName-login").value;
-          const password = document.getElementById("password-login").value;
+          const { userName, password } = getUserDataFromLoginForm();
           login(
             userName,
             password,
@@ -258,12 +253,7 @@
                 (userType) => {
                   window.userName = userName;
                   window.userType = userType;
-                  document
-                    .getElementById("open-login-btn")
-                    .classList.add("hide");
-                  document
-                    .getElementById("logout-btn")
-                    .classList.remove("hide");
+                  userLogedIn();
                   document.getElementById("close-login-modal").click();
                 },
                 alert
@@ -276,8 +266,7 @@
         document.getElementById("logout-btn").addEventListener("click", () => {
           window.userName = "";
           window.userType = "";
-          document.getElementById("open-login-btn").classList.remove("hide");
-          document.getElementById("logout-btn").classList.add("hide");
+          userLogedOut();
         });
         // getAbout(displayAbout);
         // getContact(displayContact);

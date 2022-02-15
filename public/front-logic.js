@@ -200,3 +200,51 @@ function showUserTypeOptioms(optionsToShow = []) {
     }
   }
 }
+
+
+/**
+ * Manage the page, decide which component to show and which not.
+ */
+function userLogedIn() {
+  document
+    .getElementById("open-login-btn")
+    .classList.add("hide");
+  document
+    .getElementById("logout-btn")
+    .classList.remove("hide");
+}
+
+/**
+ * Manage the page, decide which component to show and which not.
+ */
+function userLogedOut() {
+  document.getElementById("open-login-btn").classList.remove("hide");
+  document.getElementById("logout-btn").classList.add("hide");
+}
+
+function getUserDataFromLoginForm() {
+  const userName = document.getElementById("userName-login").value;
+  const password = document.getElementById("password-login").value;
+  return {
+    userName,
+    password
+  };
+}
+
+function getUserDataFromUserEditForm() {
+  const modalElement = document.getElementById("edit-user");
+  const userType = document.getElementById("user-type").value;
+  const userName = document.getElementById("userName").value;
+  const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value;
+  const userNameToEdit = modalElement.getAttribute("user-name");
+  const userOperationType = modalElement.getAttribute("user-operation-type");
+  return {
+    userType,
+    userName,
+    password,
+    email,
+    userNameToEdit,
+    userOperationType
+  };
+}
