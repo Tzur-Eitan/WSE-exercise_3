@@ -253,10 +253,21 @@
             userName,
             password,
             (userName) => {
-              window.userName = userName;
-              document.getElementById("open-login-btn").classList.add("hide");
-              document.getElementById("logout-btn").classList.remove("hide");
-              document.getElementById("close-login-modal").click();
+              getUserType(
+                userName,
+                (userType) => {
+                  window.userName = userName;
+                  window.userType = userType;
+                  document
+                    .getElementById("open-login-btn")
+                    .classList.add("hide");
+                  document
+                    .getElementById("logout-btn")
+                    .classList.remove("hide");
+                  document.getElementById("close-login-modal").click();
+                },
+                alert
+              );
             },
             alert
           );

@@ -74,10 +74,10 @@ app.get("/userType", verifyLogin, function(req, res){
   const reqUserName = req.query.reqUserName;
   const userType = usersUtils.getUserType(reqUserName);
   if(userType !== undefined){
-    res.json({type:SUCCESS, Content: userType});
+    res.json({Type:SUCCESS, Content: userType});
   }
   else {
-    res.json({type: ERROR, Content: "User name not found"})
+    res.json({Type: ERROR, Content: "User name not found"})
   }
 });
 
