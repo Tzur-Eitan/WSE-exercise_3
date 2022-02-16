@@ -102,3 +102,13 @@ main {
   display: flex;
   flex-direction: column;
 }
+
+td.user-delete-edit-buttons-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+td.user-delete-edit-buttons-container button {
+  flex-grow: 1;
+  margin: 0 5px;
+}

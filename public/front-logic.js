@@ -80,7 +80,7 @@ function editUserModalForInsertion() {
   document
     .getElementById("edit-user")
     .setAttribute("user-operation-type", "Create");
-  showUserTypeOptioms(window.userType === "Employee" ? ["Customer"] : []);
+  showUserTypeOptioms(window.userTypeStr === "Employee" ? ["Customer"] : []);
   clearAndShowAllUserForm();
 }
 
@@ -124,7 +124,7 @@ function getUserInRow(user, deleteUserButtonClicked) {
     cell.innerText = user[key];
     row.appendChild(cell);
   });
-  if (window.userType === "Manager") {
+  if (window.userTypeStr === "Manager") {
     row.appendChild(getUserActionsCell(user, deleteUserButtonClicked));
   }
   return row;
@@ -144,7 +144,7 @@ function getUserTableHeader(user) {
 function getUserActionsCell(user, deleteUserButtonClicked) {
   const deleteButton = document.createElement("button");
   deleteButton.className = "btn btn-danger delete-btn";
-  deleteButton.innerText = "Delete";
+  deleteButton.innerText = user.Type == "Employee" ? "Fire" : "Delete";
   deleteButton.addEventListener("click", () => deleteUserButtonClicked(user));
   const editButten = document.createElement("button");
   editButten.className = "btn btn-light edit-btn";
@@ -155,6 +155,7 @@ function getUserActionsCell(user, deleteUserButtonClicked) {
     editUserModalForEdit(user);
   });
   const cell = document.createElement("td");
+  cell.className = "user-delete-edit-buttons-container";
   cell.appendChild(editButten);
   cell.appendChild(deleteButton);
   return cell;
