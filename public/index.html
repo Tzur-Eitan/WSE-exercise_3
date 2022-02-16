@@ -63,6 +63,7 @@
           </nav>
         </div>
       </header>
+
       <!-- login modal -->
       <div
         class="modal fade text-dark"
@@ -173,6 +174,7 @@
             </div>
             <div class="modal-footer">
               <button
+                id="close-edit-user-modal"
                 type="button"
                 class="btn btn-secondary"
                 data-bs-dismiss="modal"
@@ -194,11 +196,29 @@
         <p>Online flowers store</p>
       </footer>
     </div>
+
+    <div id="loading-indicator-container" class="hide">
+      <div id="loading-indicator">
+        <div>
+          Loading...
+          <div class="spinner-border text-info" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="./front-logic.js"></script>
     <script type="text/javascript">
       function userOperationSuccess(data) {
+        hideLoadingIndicator();
         showUsers();
         if (data) alert(data);
+      }
+
+      function userOperationFailed(data) {
+        alert(data);
+        hideLoadingIndicator();
       }
 
       function updateContentByUrl() {
@@ -222,23 +242,26 @@
       }
 
       function showUsers() {
+        showLoadingIndicator();
         getUsers(
           window.userName,
           (data) => {
             displayUsers(
               data,
               (userToDelete) => {
+                showLoadingIndicator();
                 removeUser(
                   window.userName,
                   userToDelete.Name,
                   userOperationSuccess,
-                  alert
+                  userOperationFailed
                 );
               },
               userOperationSuccess
             );
+            hideLoadingIndicator();
           },
-          alert
+          userOperationFailed
         );
       }
 
@@ -249,6 +272,8 @@
         document
           .getElementById("save-changes-btn")
           .addEventListener("click", () => {
+            closeEditUserModal();
+            showLoadingIndicator();
             const {
               userType,
               userName,
@@ -266,7 +291,7 @@
                 email,
                 userType,
                 userOperationSuccess,
-                alert
+                userOperationFailed
               );
             } else {
               changeUserType(
@@ -274,7 +299,7 @@
                 userNameToEdit,
                 userType,
                 userOperationSuccess,
-                alert
+                userOperationFailed
               );
             }
           });
@@ -291,12 +316,12 @@
                   window.userName = userName;
                   window.userType = userType;
                   userLogedIn();
-                  document.getElementById("close-login-modal").click();
+                  closeLoginModal();
                 },
                 alert
               );
             },
-            alert
+            () => alert("Login failed")
           );
         });
 

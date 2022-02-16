@@ -288,3 +288,19 @@ function activeNavBtn(hash){
     }
   }
 }
+
+function showLoadingIndicator() {
+  document.getElementById("loading-indicator-container").classList.remove("hide");
+}
+
+function hideLoadingIndicator() {
+  document.getElementById("loading-indicator-container").classList.add("hide");
+}
+
+function closeLoginModal(){
+  document.getElementById("close-login-modal").click();
+}
+
+function closeEditUserModal(){
+  document.getElementById("close-edit-user-modal").click();
+}
