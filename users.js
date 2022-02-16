@@ -72,12 +72,14 @@ function getUsers(reqUserName) {
     return undefined;
   }
 
-  const safeUsers = _getActiveUsers().map((user) => {
-    const userClone = { ...user };
-    if (type === EMPLOYEE) delete userClone.Password;
-    delete userClone.IsDeleted;
-    return userClone;
-  });
+  const safeUsers = _getActiveUsers()
+    .filter(user => type === MANAGER || user.Type === CUSTOMER)
+    .map((user) => {
+      const userClone = { ...user };
+      if (type === EMPLOYEE) delete userClone.Password;
+      delete userClone.IsDeleted;
+      return userClone;
+    });
   return safeUsers;
 }
 
