@@ -20,6 +20,10 @@
   margin-left: 20px;
 }
 
+div.user-action-buttons button{
+  margin: 10px;
+}
+
 .hide{
   display: none;
 }

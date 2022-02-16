@@ -26,18 +26,38 @@ function displayFlowers(flowers) {
   main.appendChild(flowersContainer);
 }
 
-function displayUsers(users, deleteUserButtonClicked) {
-  cleanMainElement();
-  const main = getMainElement();
-  const addUser = document.createElement("button");
-  addUser.className = "btn btn-info";
-  addUser.innerText = "Add User";
-  addUser.setAttribute("data-bs-toggle", "modal");
-  addUser.setAttribute("data-bs-target", "#edit-user");
-  addUser.addEventListener("click", () => {
+function createUsersActionsButtons(refreshUsersButtonClicked) {
+  const usersActionsButtos = document.createElement("div");
+  usersActionsButtos.className = "user-action-buttons";
+
+  const addUserBtn = document.createElement("button");
+  addUserBtn.className = "btn btn-info";
+  addUserBtn.innerText = "Add User";
+  addUserBtn.setAttribute("data-bs-toggle", "modal");
+  addUserBtn.setAttribute("data-bs-target", "#edit-user");
+  addUserBtn.addEventListener("click", () => {
     editUserModalForInsertion();
   });
-  main.appendChild(addUser);
+  usersActionsButtos.appendChild(addUserBtn);
+
+  const refreshUsersBtn = document.createElement("button");
+  refreshUsersBtn.className = "btn btn-success";
+  refreshUsersBtn.innerText = "Refresh Users";
+  refreshUsersBtn.addEventListener("click", () => {
+    refreshUsersButtonClicked();
+  });
+  usersActionsButtos.appendChild(refreshUsersBtn);
+  return usersActionsButtos;
+}
+
+function displayUsers(users, deleteUserButtonClicked, refreshUsersButtonClicked) {
+  cleanMainElement();
+  const main = getMainElement();
+
+  const usersActionsButtos = createUsersActionsButtons(refreshUsersButtonClicked);
+
+  main.appendChild(usersActionsButtos);
+
   if (users.length > 0) {
     const table = document.createElement("table");
     table.appendChild(getUserTableHeader(users[0]));

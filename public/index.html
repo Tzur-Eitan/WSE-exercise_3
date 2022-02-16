@@ -198,10 +198,10 @@
     <script type="text/javascript">
       function userOperationSuccess(data) {
         showUsers();
-        alert(data);
+        if (data) alert(data);
       }
 
-      function updateContentByUrl(){
+      function updateContentByUrl() {
         const root = location.hash.toLocaleLowerCase();
         activeNavBtn(root);
         switch (root) {
@@ -218,21 +218,25 @@
           default:
             getAbout(displayAbout);
             break;
-            }
+        }
       }
 
       function showUsers() {
         getUsers(
           window.userName,
           (data) => {
-            displayUsers(data, (userToDelete) => {
-              removeUser(
-                window.userName,
-                userToDelete.Name,
-                userOperationSuccess,
-                alert
-              );
-            });
+            displayUsers(
+              data,
+              (userToDelete) => {
+                removeUser(
+                  window.userName,
+                  userToDelete.Name,
+                  userOperationSuccess,
+                  alert
+                );
+              },
+              userOperationSuccess
+            );
           },
           alert
         );
