@@ -59,12 +59,19 @@ function getAbout(successCallback) {
 }
 
 function createGetRequest(url, data, successCallback, failedCallback) {
-    $.get(url, data, function (data, status) {
-        if (data.Type == SUCCESS) {
-            successCallback(data.Content);
-        }
-        else {
-            failedCallback(data.Content);
-        }
-    })
+    const options = {
+        url,
+        data,
+        success: (data, status) => {
+            if (data.Type == SUCCESS) {
+                successCallback(data.Content);
+            }
+            else {
+                failedCallback(data.Content);
+            }
+        },
+        error: () => failedCallback("Error in server side."),
+        timeout: 5000 // 5 seconds
+    };
+    $.get(options);
 }

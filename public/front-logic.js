@@ -143,11 +143,11 @@ function getUserTableHeader(user) {
 
 function getUserActionsCell(user, deleteUserButtonClicked) {
   const deleteButton = document.createElement("button");
-  deleteButton.className = "btn btn-danger";
+  deleteButton.className = "btn btn-danger delete-btn";
   deleteButton.innerText = "Delete";
   deleteButton.addEventListener("click", () => deleteUserButtonClicked(user));
   const editButten = document.createElement("button");
-  editButten.className = "btn btn-light";
+  editButten.className = "btn btn-light edit-btn";
   editButten.innerText = "Edit";
   editButten.setAttribute("data-bs-toggle", "modal");
   editButten.setAttribute("data-bs-target", "#edit-user");
@@ -272,7 +272,13 @@ function getUserDataFromUserEditForm() {
     userNameToEdit,
     userOperationType,
   };
-  
+}
+
+function disableEditDeleteOperations(){
+  const buttons = document.querySelectorAll(".edit-btn, .delete-btn");
+  for(let btn of buttons) {
+    btn.disabled = true;
+  }
 }
 
 function activeNavBtn(hash){
