@@ -4,7 +4,7 @@
 
 
 /* Custom default button */
-#btn-login,
+#open-login-btn,
 #btn-login:hover,
 #btn-login:focus {
   color: #333;
@@ -12,7 +12,7 @@
   margin-left: 20px;
 }
 
-#btn-logout,
+#logout-btn,
 #btn-logout:hover,
 #btn-logout:focus {
   color: #333;
@@ -76,4 +76,8 @@ body {
 
 .card-text{
   display: block;
+}
+
+.justify-content-right {
+  justify-content: right!important;
 }
