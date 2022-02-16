@@ -8,7 +8,7 @@ const path = require('path');
 
 const ERROR = "ERROR";
 const SUCCESS = "SUCCESS";
-const USER_ACTION_SLEEP_MS = 5000;
+const USER_ACTION_SLEEP_MS = 1000;
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
