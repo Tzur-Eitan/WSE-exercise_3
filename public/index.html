@@ -230,10 +230,20 @@
             getContact(displayContact);
             break;
           case "#flowers":
-            getFlowers(window.userName, displayFlowers, alert);
+            if(window.userNameStr){
+              getFlowers(window.userNameStr, displayFlowers, alert);
+            }
+            else{ 
+              location.hash = "#";
+            }
             break;
           case "#users":
-            showUsers();
+          if(window.userNameStr){
+              showUsers();
+            }
+            else{ 
+              location.hash = "#";
+            }
             break;
           case "#about":
           default:
@@ -245,14 +255,14 @@
       function showUsers() {
         showLoadingIndicator();
         getUsers(
-          window.userName,
+          window.userNameStr,
           (data) => {
             displayUsers(
               data,
               (userToDelete) => {
                 showLoadingIndicator();
                 removeUser(
-                  window.userName,
+                  window.userNameStr,
                   userToDelete.Name,
                   userOperationSuccess,
                   userOperationFailed
@@ -286,7 +296,7 @@
 
             if (userOperationType === "Create") {
               addUser(
-                window.userName,
+                window.userNameStr,
                 userName,
                 password,
                 email,
@@ -296,7 +306,7 @@
               );
             } else {
               changeUserType(
-                window.userName,
+                window.userNameStr,
                 userNameToEdit,
                 userType,
                 userOperationSuccess,
@@ -314,8 +324,8 @@
               getUserType(
                 userName,
                 (userType) => {
-                  window.userName = userName;
-                  window.userType = userType;
+                  window.userNameStr = userName;
+                  window.userTypeStr = userType;
                   userLogedIn();
                   closeLoginModal();
                 },
@@ -327,8 +337,8 @@
         });
 
         document.getElementById("logout-btn").addEventListener("click", () => {
-          window.userName = "";
-          window.userType = "";
+          window.userNameStr = "";
+          window.userTypeStr = "";
           userLogedOut();
         });
       };
